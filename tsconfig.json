@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "target": "ES5",
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "outDir": "./.dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "rootDir": "./"
+  }
+}

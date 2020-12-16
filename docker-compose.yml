@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: runes
+      POSTGRES_PASSWORD: runesapi
+      POSTGRES_USER: runesapi
+    ports:
+      - '5432:5432'
