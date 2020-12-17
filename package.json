@@ -10,8 +10,8 @@
     "up": "./scripts/up-db.sh && serverless offline start --useChildProcesses",
     "start": "npm run up",
     "down": "docker-compose down",
-    "test": "jest test/unit",
-    "test:integration": "jest test/integration"
+    "test": "jest --selectProjects unit",
+    "test:integration": "jest --selectProjects integration"
   },
   "dependencies": {
     "pg": "^8.5.1",
