@@ -1,10 +1,10 @@
-service: runes-serverless
+service: runesapi
 
 provider:
   name: aws
   runtime: nodejs12.x
 
-frameworkVersion: "2"
+frameworkVersion: '2'
 
 plugins:
   - serverless-plugin-typescript
