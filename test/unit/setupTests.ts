@@ -1,0 +1,1 @@
+global.afterEach(jest.clearAllMocks);
