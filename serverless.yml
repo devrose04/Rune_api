@@ -19,7 +19,7 @@ package:
 
 functions:
   add:
-    handler: src/handler.hello
+    handler: src/handler.add
 
   # NOTE: the following uses an "event" event (pubSub event in this case).
   # Please create the corresponding resources in the Google Cloud

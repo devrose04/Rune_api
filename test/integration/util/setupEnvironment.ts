@@ -40,6 +40,7 @@ module.exports = async function () {
 
   await execa('NODE_ENV=development npx sequelize-cli db:migrate', { shell: true });
   await execa('NODE_ENV=development npx sequelize-cli db:seed:all;', { shell: true });
+  // await execa('', { shell: true });
 
   console.log('Environment ready.\n');
 };
