@@ -1,4 +1,4 @@
-import { IApiContract } from './types/IApiContract';
+import { IApiContract } from '../types/IApiContract';
 
 export const formatErrResponse = <E extends Error>(e: E): IApiContract<undefined> => {
   return {

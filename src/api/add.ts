@@ -1,7 +1,7 @@
 import { Fn } from '../types/Fn';
 import { AddSchema, isAddSchemaValid } from '../schemas/AddSchema';
 import { AddResponse } from '../types/AddResponse';
-import { executor } from '../executor';
+import { executor } from '../common/executor';
 import { IApiContract } from '../types/IApiContract';
 
 export const add: Fn<typeof AddSchema, IApiContract<AddResponse>> = (input) => {

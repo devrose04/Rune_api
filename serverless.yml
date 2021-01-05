@@ -23,3 +23,4 @@ functions:
     events:
       - http:
         method: POST
+        cors: true

@@ -1,5 +1,5 @@
 import { formatErrResponse } from './formatErrorResponse';
-import { IApiContract } from './types/IApiContract';
+import { IApiContract } from '../types/IApiContract';
 import { isError } from './isError';
 
 export const processError = (e: unknown): IApiContract<undefined> => {

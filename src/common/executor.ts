@@ -1,6 +1,5 @@
 import { formatResponse } from './formatResponse';
 import { processError } from './processError';
-import { IApiContract } from './types/IApiContract';
 
 /**
  * Execute a function and return from the API in a consistent way.

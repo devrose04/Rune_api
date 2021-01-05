@@ -1,4 +1,4 @@
-import { IApiContract } from './types/IApiContract';
+import { IApiContract } from '../types/IApiContract';
 
 export const formatResponse = <B>(body: B): IApiContract<B> => {
   return {
