@@ -1,10 +1,6 @@
 {
   "development": {
-    "username": "runesapi",
-    "password": "runesapi",
-    "database": "runes",
-    "host": "localhost",
-    "dialect": "postgres"
+    "use_env_variable": "POSTGRES_CONNECTION_STRING"
   },
   "production": {
     "use_env_variable": "POSTGRES_CONNECTION_STRING"

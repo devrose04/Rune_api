@@ -1,4 +1,4 @@
-process.on('unhandledRejection', (data: any) => {
+process.on('unhandledRejection', (data) => {
   console.log('Unhandled Rejection\n', data);
   process.exit(1);
 });
