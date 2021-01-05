@@ -1,20 +1,21 @@
 import { Fn } from '../types/Fn';
+import { AddSchema, isAddSchemaValid } from '../schemas/AddSchema';
+import { AddResponse } from '../types/AddResponse';
+import { formatResponse } from '../formatResponse';
+import { processError } from '../processError';
 
-interface IAddResponse {
-  id: string;
-}
+export const add: Fn<typeof AddSchema, AddResponse> = async (input) => {
+  try {
+    if (!isAddSchemaValid(input)) {
+      throw new Error('Input does not match the defined API schema.');
+    }
 
-export const AddSchema = {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-  },
-} as const;
+    const response = {
+      id: 'Boom, lambda.',
+    };
 
-export const add: Fn<typeof AddSchema, IAddResponse> = async (test) => {
-  const response = {
-    id: 'Boom, lambda.',
-  };
-
-  return response;
+    return formatResponse(response);
+  } catch (e: unknown) {
+    return processError(e);
+  }
 };

@@ -5,7 +5,4 @@ import { JsonSchema, JsonSchemaToType } from './JsonSchema';
 //   event: JsonSchemaToType<I>
 // ) => Handler<JsonSchemaToType<I>, R | Promise<R>>;
 
-export type Fn<I extends Readonly<JsonSchema>, R = any> = Handler<
-  JsonSchemaToType<I>,
-  R | Promise<R>
->;
+export type Fn<I extends Readonly<JsonSchema>, R = any> = Handler<JsonSchemaToType<I>, R>;
