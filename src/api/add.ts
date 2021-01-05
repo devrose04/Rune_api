@@ -1,12 +1,19 @@
-import { Handler } from 'aws-lambda';
+import { Fn } from '../types/Fn';
 
-export const add: Handler = async (event) => {
+interface IAddResponse {
+  id: string;
+}
+
+export const AddSchema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+  },
+} as const;
+
+export const add: Fn<typeof AddSchema, IAddResponse> = async (test) => {
   const response = {
-    statusCode: 200,
-    body: {
-      message: 'Boom, lambda.',
-      input: event,
-    },
+    id: 'Boom, lambda.',
   };
 
   return response;

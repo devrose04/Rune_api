@@ -7,7 +7,7 @@
     "node": "12.x.x"
   },
   "scripts": {
-    "up": "./scripts/up-db.sh && serverless offline start --useChildProcesses",
+    "up": "serverless offline start --useChildProcesses",
     "start": "npm run up",
     "down": "docker-compose down",
     "test": "jest --selectProjects unit",
