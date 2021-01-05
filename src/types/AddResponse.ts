@@ -1,5 +1,3 @@
-import { IApiContract } from './IApiContract';
-
-export type AddResponse = IApiContract<{
+export interface AddResponse {
   id: string;
-}>;
+}

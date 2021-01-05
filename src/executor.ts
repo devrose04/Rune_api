@@ -5,9 +5,9 @@ import { IApiContract } from './types/IApiContract';
 /**
  * Execute a function and return from the API in a consistent way.
  */
-export const executor = <T>(fn: () => T) => {
+export const executor = async <T = any>(fn: () => Promise<T>) => {
   try {
-    return formatResponse(fn());
+    return formatResponse(await fn());
   } catch (e: unknown) {
     return processError(e);
   }
