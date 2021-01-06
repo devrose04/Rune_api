@@ -1,8 +1,0 @@
-{
-  "development": {
-    "use_env_variable": "POSTGRES_CONNECTION_STRING"
-  },
-  "production": {
-    "use_env_variable": "POSTGRES_CONNECTION_STRING"
-  }
-}
