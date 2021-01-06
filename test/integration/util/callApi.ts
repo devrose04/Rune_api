@@ -16,12 +16,12 @@ export enum Endpoints {
 export interface ICallApi {
   endpoint: string;
   baseUrl?: string;
-  params?: any;
-  body?: any;
+  params?: unknown;
+  body?: unknown;
   type?: RequestType;
 }
 
-export const callApi = async <T = any>({
+export const callApi = async <T = unknown>({
   baseUrl = 'http://localhost:3002',
   body = {},
   params = {},
