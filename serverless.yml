@@ -24,3 +24,9 @@ functions:
       - http:
         method: POST
         cors: true
+  find:
+    handler: src/handler.find
+    events:
+      - http:
+        method: GET
+        cors: true

@@ -1,25 +1,19 @@
-import { Sequelize } from 'sequelize';
 import { Fn } from '../types/Fn';
 import { FindSchema } from '../schemas/FindSchema';
-import { AddResponse } from '../types/AddResponse';
+import { FindResponse } from '../types/FindResponse';
 import { execute } from '../common/execute';
 import { IApiContract } from '../types/IApiContract';
-// import { getDbConnectionString } from '../common/getDbConnectionString';
-// import { rune } from '../../db/models/rune'
+import { getRepository } from 'typeorm';
+import { Rune } from '../db/entity/Rune';
 
-export const find: Fn<typeof FindSchema, IApiContract<AddResponse>> = (input) => {
+export const find: Fn<typeof FindSchema, IApiContract<FindResponse>> = (input) => {
   return execute([FindSchema, input], async () => {
-    // const sequelize = new Sequelize(getDbConnectionString);
-    // await sequelize.authenticate();
+    const runeRepository = getRepository(Rune);
+    const [runes, count] = await runeRepository.findAndCount();
 
-    //
-
-    //
-
-    const response = {
-      id: 'Boom, lambda.',
+    return {
+      count,
+      runes,
     };
-
-    return response;
   });
 };
