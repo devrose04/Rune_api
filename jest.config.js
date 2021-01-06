@@ -6,7 +6,7 @@ module.exports = {
       transform: { '\\.ts$': ['ts-jest'] },
       displayName: 'unit',
       testMatch: ['**/test/unit/**/*.spec.ts'],
-      setupFilesAfterEnv: ['<rootDir>/test/unit/setupTests.ts'], // Run before each suite, but before all tests in that suite
+      setupFilesAfterEnv: ['<rootDir>/test/unit/setupTests.ts'],
     },
     {
       transform: { '\\.ts$': ['ts-jest'] },
