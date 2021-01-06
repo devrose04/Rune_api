@@ -7,11 +7,13 @@
     "node": "12.x.x"
   },
   "scripts": {
-    "up": "serverless offline start --useChildProcesses",
+    "up": "./scripts/up.sh",
     "start": "npm run up",
-    "down": "docker-compose down",
+    "down": "docker-compose down && ./scripts/down-detached.sh",
     "test": "jest --selectProjects unit",
+    "pretest:integration": "./scripts/up-detached.sh && wait-on tcp:3002",
     "test:integration": "jest --selectProjects integration --detectOpenHandles",
+    "posttest:integration": "npm run down",
     "db:create:entity": "ts-node ./node_modules/.bin/typeorm entity:create -d src/db/entity",
     "db:create:migration": "ts-node ./node_modules/.bin/typeorm migration:create -d src/db/migration",
     "db:generate:migration": "ts-node ./node_modules/.bin/typeorm migration:generate -d src/db/migration",

@@ -2,6 +2,7 @@
 .serverless
 tmp
 .coveralls.yml
+serverless.pid
 
 # Google
 keyfile.json
