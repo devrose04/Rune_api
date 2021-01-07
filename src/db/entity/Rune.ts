@@ -1,7 +1,7 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, PrimaryColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
-export class Rune {
+export class Rune extends BaseEntity {
   @PrimaryColumn()
   public name: string;
 
