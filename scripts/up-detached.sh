@@ -7,7 +7,22 @@ sh ./scripts/up.sh;
 # we can add a prompt for the user to ask if they'd like to kill it.
 if [ -f ./serverless.pid ]; then
     echo "Serverless PID file found.."
-    exit 1
+
+    while true
+    do
+    read -p "Would you like to stop the current running instance? [y] " answer
+    answer=${answer:-y}
+
+    case $answer in
+    [yY]* ) echo -e '\nStopping running serverless process\n'
+            sh ./scripts/down-detached.sh
+            break;;
+    [nN] )  break;;
+    * )     echo "Please enter Y or N.";
+            break;;
+    esac
+    done
+
 fi
 
 serverless offline start --useChildProcesses &
