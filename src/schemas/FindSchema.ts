@@ -1,6 +1,7 @@
 import { Aett } from '../types/Aett';
 
 export const FindSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {
     aett: {
@@ -11,4 +12,5 @@ export const FindSchema = {
       type: 'string',
     },
   },
+  required: [],
 } as const;

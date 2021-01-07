@@ -21,6 +21,8 @@ export const execute = async <T = unknown>(
 
     return formatResponse(await fn());
   } catch (e: unknown) {
-    return processError(e);
+    const err = processError(e);
+    console.error(err);
+    return err;
   }
 };

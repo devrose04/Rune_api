@@ -1,8 +1,12 @@
 import { IApiContract } from '../types/IApiContract';
 
-export const formatErrResponse = <E extends Error>(e: E): IApiContract<undefined> => {
+interface IError extends Error {
+  code?: number;
+}
+
+export const formatErrResponse = <E extends IError>(e: E): IApiContract<undefined> => {
   return {
-    statusCode: (e as any).code ?? 500,
+    statusCode: e.code ?? 500,
     errors: [
       {
         message: e.message,

@@ -1,15 +1,20 @@
+const sharedProjectProperties = {
+  testEnvironment: 'node',
+  transform: { '\\.ts$': ['ts-jest'] },
+};
+
 module.exports = {
   moduleFileExtensions: ['ts', 'js'],
   globals: { 'ts-jest': { tsconfig: 'tsconfig.json' } },
   projects: [
     {
-      transform: { '\\.ts$': ['ts-jest'] },
+      ...sharedProjectProperties,
       displayName: 'unit',
       testMatch: ['**/test/unit/**/*.spec.ts'],
       setupFilesAfterEnv: ['<rootDir>/test/unit/setupTests.ts'],
     },
     {
-      transform: { '\\.ts$': ['ts-jest'] },
+      ...sharedProjectProperties,
       displayName: 'integration',
       testMatch: ['**/test/integration/**/*.spec.ts'],
     },

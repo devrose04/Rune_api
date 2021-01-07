@@ -22,11 +22,13 @@ functions:
     handler: src/handler.add
     events:
       - http:
-        method: POST
-        cors: true
+          path: /add
+          method: POST
+          cors: true
   find:
     handler: src/handler.find
     events:
       - http:
-        method: GET
-        cors: true
+          path: /find
+          method: GET
+          cors: true

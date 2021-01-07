@@ -1,5 +1,6 @@
 import { callApi, RequestType } from './util/callApi';
 import { AddResponse } from '../../src/types/AddResponse';
+import { FindResponse } from '../../src/types/FindResponse';
 
 describe('CRUD', () => {
   describe('add', () => {
@@ -35,6 +36,29 @@ describe('CRUD', () => {
       console.log('----------------------------');
       console.log(resp.body);
       console.log('----------------------------');
+    });
+  });
+
+  describe.only('find', () => {
+    it('should throw a validation error if no parameters are provided', async () => {
+      const { statusCode, errors } = await callApi<FindResponse>({
+        endpoint: 'find',
+        type: RequestType.Get,
+        params: undefined,
+      });
+
+      expect(statusCode).toBe(422);
+      expect(errors).toEqual([
+        {
+          keyword: 'type',
+          dataPath: '/name',
+          schemaPath: '#/properties/name/type',
+          params: {
+            type: 'object',
+          },
+          message: 'should be object',
+        },
+      ]);
     });
   });
 });
