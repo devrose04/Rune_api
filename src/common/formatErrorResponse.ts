@@ -1,17 +1,28 @@
-import { IApiContract } from '../types/IApiContract';
+import { ICustomError } from '../types/ICustomError';
 
-interface IError extends Error {
-  code?: number;
+interface IFormattedError {
+  errorType: string;
+  httpStatus: number;
+  data: unknown;
+  requestId: string;
+  message: string;
+  stack?: string;
 }
 
-export const formatErrResponse = <E extends IError>(e: E): IApiContract<undefined> => {
+export const formatErrResponse = ({
+  name,
+  code,
+  data,
+  requestId,
+  message,
+  stack,
+}: ICustomError): IFormattedError => {
   return {
-    statusCode: e.code ?? 500,
-    errors: [
-      {
-        message: e.message,
-      },
-    ],
-    body: undefined,
+    errorType: name,
+    httpStatus: code,
+    data,
+    requestId,
+    message,
+    stack,
   };
 };

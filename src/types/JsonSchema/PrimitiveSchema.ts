@@ -3,7 +3,11 @@ import { NullSchema } from './NullSchema';
 import { NumberSchema } from './NumberSchema';
 import { StringSchema, StringSchemaToType } from './StringSchema';
 
-export type PrimitiveSchema = NumberSchema | StringSchema | BooleanSchema | NullSchema;
+export type PrimitiveSchema =
+  | NumberSchema
+  | StringSchema
+  | BooleanSchema
+  | NullSchema;
 export type PrimitiveSchemaTypes = PrimitiveSchema['type'];
 export type PrimitiveSchemaToType<T extends PrimitiveSchema> = {
   null: null;

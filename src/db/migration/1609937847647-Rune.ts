@@ -31,9 +31,11 @@ export class Rune1609937847647 implements MigrationInterface {
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`CREATE TYPE aett AS ENUM ('freya', 'heimdall', 'tyr');`);
     await queryRunner.query(
-      `CREATE TABLE "Rune" (
+      `CREATE TYPE aett AS ENUM ('freya', 'heimdall', 'tyr');`
+    );
+    await queryRunner.query(
+      `CREATE TABLE "rune" (
             "name" character varying NOT NULL,
             "transliteration" character varying,
             "aett" aett NOT NULL,
@@ -42,14 +44,17 @@ export class Rune1609937847647 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `INSERT INTO "Rune" (name, transliteration, aett) values ${this.runes
-        .map((rune) => `('${rune.name}', '${rune.transliteration}', '${rune.aett}')`)
+      `INSERT INTO "rune" (name, transliteration, aett) values ${this.runes
+        .map(
+          (rune) =>
+            `('${rune.name}', '${rune.transliteration}', '${rune.aett}')`
+        )
         .join(',')};`
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE "Rune"`);
+    await queryRunner.query(`DROP TABLE "rune"`);
     await queryRunner.query(`DROP TYPE aett`);
   }
 }

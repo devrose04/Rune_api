@@ -6,7 +6,10 @@ export type ComplexSchema = ArraySchema | ObjectSchema;
 export type ComplexSchemaTypes = ComplexSchema['type'];
 export type ComplexSchemaToType<T extends ComplexSchema> = T extends ArraySchema
   ? JsonSchemaToType<T>[]
-  : T extends ObjectSchema & { required?: infer R; additionalProperties?: infer A }
+  : T extends ObjectSchema & {
+      required?: infer R;
+      additionalProperties?: infer A;
+    }
   ? {
       [K in keyof T['properties']]?: JsonSchemaToType<T['properties'][K]>;
     } &

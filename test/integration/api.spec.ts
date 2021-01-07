@@ -28,7 +28,10 @@ describe('CRUD', () => {
     });
 
     it('should add a rune', async () => {
-      const resp = await callApi<AddResponse>({ endpoint: 'add', type: RequestType.Post });
+      const resp = await callApi<AddResponse>({
+        endpoint: 'add',
+        type: RequestType.Post,
+      });
 
       expect(resp.statusCode).toBe(200);
       expect(resp.body).toBeDefined();

@@ -18,7 +18,9 @@
     "db:create:migration": "ts-node ./node_modules/.bin/typeorm migration:create -d src/db/migration",
     "db:generate:migration": "ts-node ./node_modules/.bin/typeorm migration:generate -d src/db/migration",
     "db:run:migration": "ts-node ./node_modules/.bin/typeorm migration:run",
-    "db:revert:migration": "ts-node ./node_modules/.bin/typeorm migration:revert"
+    "db:revert:migration": "ts-node ./node_modules/.bin/typeorm migration:revert",
+    "check:prettier": "prettier \"{.,,{src,test,.vscode}/**/}*.@(ts|js|json|yml|yaml)\" --list-different",
+    "fix:prettier": "npm run check:prettier -- --write"
   },
   "dependencies": {
     "ajv": "^7.0.3",

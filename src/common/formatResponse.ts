@@ -1,9 +1,8 @@
 import { IApiContract } from '../types/IApiContract';
 
-export const formatResponse = <B>(body: B): IApiContract<B> => {
+export const formatResponse = <B>(body: B): IApiContract => {
   return {
-    statusCode: (body as any).code ?? 200,
-    errors: [],
-    body,
+    statusCode: 200,
+    body: JSON.stringify(body),
   };
 };

@@ -1,8 +1,7 @@
-import { ErrorObject } from 'ajv';
-import { IError } from './IError';
+// import { ErrorObject } from 'ajv';
+// import { IError } from './IError';
 
-export interface IApiContract<S> {
+export interface IApiContract {
   statusCode: number;
-  errors: Array<IError | ErrorObject>;
-  body?: S;
+  body?: string;
 }
