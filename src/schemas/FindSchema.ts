@@ -5,22 +5,15 @@ export const FindSchema = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {
-    where: {
-      type: 'object',
-      additionalProperties: false,
-      properties: {
-        aett: {
-          type: 'string',
-          enum: [Aett.Freya, Aett.Heimdall, Aett.Tyr],
-        },
-        name: {
-          type: 'string',
-        },
-      },
+    aett: {
+      type: 'string',
+      enum: [Aett.Freya, Aett.Heimdall, Aett.Tyr],
+    },
+    name: {
+      type: 'string',
     },
     orderBy: {
       type: 'object',
-      additionalProperties: false,
       properties: {
         aett: {
           type: 'string',

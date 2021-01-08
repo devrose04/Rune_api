@@ -21,9 +21,12 @@ export async function execute<R, T extends JsonSchema>(
         code: 422,
         data: {
           errors: validator.errors,
+          input: event,
+          schema,
         },
       });
     }
+
     return formatResponse(await fn(event));
   } catch (e: unknown) {
     if (isError(e)) {

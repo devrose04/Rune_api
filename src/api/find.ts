@@ -8,17 +8,18 @@ import { Order } from '../types/Order';
 
 export const find: Fn = async ({ queryStringParameters: params }, ctx) => {
   return execute<FindResponse, typeof FindSchema>(
-    [FindSchema, params, ctx],
-    async ({ where, orderBy }) => {
+    [FindSchema, params ?? {}, ctx],
+    async ({ name, aett, orderBy }) => {
       const [runes, count] = await ormConnect(
         [Rune],
         ctx.awsRequestId,
         async ([runeRepository]) => {
           return runeRepository.findAndCount({
-            where,
+            // Remove any undefined values from the where
+            where: JSON.parse(JSON.stringify({ name, aett })),
             order: {
-              aett: orderBy.aett as Order,
-              name: orderBy.name as Order,
+              aett: orderBy?.aett as Order,
+              name: orderBy?.name as Order,
             },
           });
         }
