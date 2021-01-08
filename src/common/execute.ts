@@ -6,15 +6,14 @@ import { formatErrResponse } from './formatErrorResponse';
 import { formatResponse } from './formatResponse';
 
 export async function execute<T = unknown>(
-  [schema, input, ctx]: [Schema | JSONSchemaType<T>, unknown, Context],
-  fn: () => Promise<T>
+  [schema, event, ctx]: [Schema | JSONSchemaType<T>, unknown, Context],
+  fn: (input: JSONSchemaType<T>) => Promise<T>
 ): Promise<IApiContract> {
   const ajv = new Ajv();
   const validator = ajv.compile<typeof schema>(schema);
-  const isValid = validator(input);
 
   try {
-    if (!isValid) {
+    if (!validator(event)) {
       return formatResponse({
         name: 'ValidationError',
         message: 'Input does not meet schema requirements.',
@@ -24,9 +23,11 @@ export async function execute<T = unknown>(
           errors: validator.errors,
         },
       });
+    } else {
+      // forgive me, future me
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return formatResponse(await fn(event as any));
     }
-
-    return formatResponse(await fn());
   } catch (e: unknown) {
     if (isError(e)) {
       return formatResponse(

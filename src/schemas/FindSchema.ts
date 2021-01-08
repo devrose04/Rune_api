@@ -12,5 +12,6 @@ export const FindSchema = {
       type: 'string',
     },
   },
+  additionalProperties: false,
   required: [],
 } as const;

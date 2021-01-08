@@ -1,7 +1,3 @@
-import { Handler } from 'aws-lambda';
-import { JsonSchema, JsonSchemaToType } from './JsonSchema';
+import { Handler, APIGatewayEvent } from 'aws-lambda';
 
-export type Fn<I extends Readonly<JsonSchema>, R = unknown> = Handler<
-  JsonSchemaToType<I>,
-  R
->;
+export type Fn = Handler<APIGatewayEvent>;

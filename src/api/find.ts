@@ -5,8 +5,10 @@ import { execute } from '../common/execute';
 import { Rune } from '../db/entity/Rune';
 import { ormConnect } from '../common/ormConnect';
 
-export const find: Fn<typeof FindSchema> = async (input, ctx) => {
-  return execute<FindResponse>([FindSchema, input, ctx], async () => {
+export const find: Fn = async ({ queryStringParameters: params }, ctx) => {
+  return execute<FindResponse>([FindSchema, params, ctx], async (input) => {
+    console.log('input', input);
+
     const [runes, count] = await ormConnect(
       [Rune],
       ctx.awsRequestId,
