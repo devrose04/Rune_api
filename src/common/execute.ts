@@ -1,16 +1,16 @@
-import Ajv, { JSONSchemaType, Schema } from 'ajv';
+import Ajv, { Schema } from 'ajv';
 import { Context } from 'aws-lambda';
 import isError from 'lodash.iserror';
 import { IApiContract } from '../types/IApiContract';
+import { JsonSchema, JsonSchemaToType } from '../types/JsonSchema';
 import { formatErrResponse } from './formatErrorResponse';
 import { formatResponse } from './formatResponse';
 
-export async function execute<T = unknown>(
-  [schema, event, ctx]: [Schema | JSONSchemaType<T>, unknown, Context],
-  fn: (input: JSONSchemaType<T>) => Promise<T>
+export async function execute<R, T extends JsonSchema>(
+  [schema, event, ctx]: [Schema | JsonSchemaToType<T>, unknown, Context],
+  fn: (input: JsonSchemaToType<T>) => Promise<R>
 ): Promise<IApiContract> {
-  const ajv = new Ajv();
-  const validator = ajv.compile<typeof schema>(schema);
+  const validator = new Ajv().compile<JsonSchemaToType<T>>(schema);
 
   try {
     if (!validator(event)) {
@@ -23,18 +23,12 @@ export async function execute<T = unknown>(
           errors: validator.errors,
         },
       });
-    } else {
-      // forgive me, future me
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return formatResponse(await fn(event as any));
     }
+    return formatResponse(await fn(event));
   } catch (e: unknown) {
     if (isError(e)) {
       return formatResponse(
-        formatErrResponse({
-          ...e,
-          requestId: ctx.awsRequestId,
-        })
+        formatErrResponse({ ...e, requestId: ctx.awsRequestId })
       );
     }
 
