@@ -1,12 +1,11 @@
 import { getConnectionManager, getRepository, Repository } from 'typeorm';
 import { Rune } from '../db/entity/Rune';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const ormConnect = async <R>(
   entities: typeof Rune[],
   connectionName: string,
   callback: (repository: Repository<Rune>[]) => R
-) => {
+): Promise<R> => {
   await getConnectionManager()
     .create({
       type: 'postgres',
@@ -20,10 +19,5 @@ export const ormConnect = async <R>(
     getRepository(entity, connectionName)
   );
 
-  try {
-    return callback(repositories);
-  } finally {
-    // for some reason this hangs and prevents anything from ever returning
-    // connection.close();
-  }
+  return callback(repositories);
 };
