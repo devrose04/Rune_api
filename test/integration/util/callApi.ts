@@ -11,6 +11,7 @@ export enum RequestType {
 
 export enum Endpoints {
   Add = 'add',
+  Find = 'find',
 }
 
 export interface ICallApi {
@@ -27,7 +28,7 @@ export const callApi = async <T = unknown>({
   params = {},
   type = RequestType.Get,
   endpoint,
-}: ICallApi): Promise<IApiContract<T>> => {
+}: ICallApi): Promise<IApiContract> => {
   const url = `${baseUrl}/2015-03-31/functions/${name}-dev-${endpoint}/invocations`;
   switch (type) {
     case RequestType.Get:
