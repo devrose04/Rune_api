@@ -31,7 +31,13 @@ export async function execute<R, T extends JsonSchema>(
   } catch (e: unknown) {
     if (isError(e)) {
       return formatResponse(
-        formatErrResponse({ ...e, requestId: ctx.awsRequestId })
+        formatErrResponse({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          code: (e as any).code ?? 500,
+          message: e.message,
+          name: e.name,
+          requestId: ctx.awsRequestId,
+        })
       );
     }
 

@@ -1,7 +1,19 @@
-import { Entity, PrimaryColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
+
+interface IRuneConstructor {
+  name: string;
+  transliteration?: string;
+  aett: string;
+}
 
 @Entity()
-export class Rune extends BaseEntity {
+export class Rune {
+  constructor(r: IRuneConstructor) {
+    this.name = r.name;
+    this.transliteration = r.transliteration;
+    this.aett = r.aett;
+  }
+
   @PrimaryColumn()
   public name: string;
 
