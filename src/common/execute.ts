@@ -1,6 +1,6 @@
 import Ajv, { Schema } from 'ajv';
 import { Context } from 'aws-lambda';
-import isError from 'lodash.iserror';
+import { isError } from 'lodash';
 import { IApiContract } from '../types/IApiContract';
 import { JsonSchema, JsonSchemaToType } from '../types/JsonSchema';
 import { formatErrResponse } from './formatErrorResponse';

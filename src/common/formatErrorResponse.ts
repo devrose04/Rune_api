@@ -1,13 +1,5 @@
 import { ICustomError } from '../types/ICustomError';
-
-interface IFormattedError {
-  errorType: string;
-  httpStatus: number;
-  data: unknown;
-  requestId: string;
-  message: string;
-  stack?: string;
-}
+import { IFormattedError } from '../types/IFormattedError';
 
 export const formatErrResponse = ({
   name,

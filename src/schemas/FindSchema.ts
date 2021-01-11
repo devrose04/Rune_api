@@ -6,8 +6,11 @@ export const FindSchema = {
   type: 'object',
   properties: {
     aett: {
-      type: 'string',
-      enum: [Aett.Freya, Aett.Heimdall, Aett.Tyr],
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: [Aett.Freya, Aett.Heimdall, Aett.Tyr],
+      },
     },
     name: {
       type: 'string',

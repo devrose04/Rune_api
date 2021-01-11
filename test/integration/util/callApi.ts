@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { name } from '../../../package.json';
-import { IApiContract } from '../../../src/types/IApiContract';
+import { isObject } from 'lodash';
 
 export enum RequestType {
   Post = 'post',
@@ -21,20 +20,34 @@ export interface ICallApi {
   type?: RequestType;
 }
 
-export const callApi = async <T = unknown>({
-  baseUrl = 'http://localhost:3002',
+interface IGenericObject {
+  [key: string]: any;
+}
+
+export const callApi = async <T extends IGenericObject>({
+  baseUrl = 'http://localhost:3000',
   body = {},
   params = {},
   type = RequestType.Get,
   endpoint,
-}: ICallApi): Promise<IApiContract<T>> => {
-  const url = `${baseUrl}/2015-03-31/functions/${name}-dev-${endpoint}/invocations`;
+}: ICallApi): Promise<T> => {
+  const url = `${baseUrl}/dev/${endpoint}`;
+  let response: T;
+
   switch (type) {
     case RequestType.Get:
-      return (await axios.get(url, { params })).data;
+      response = (await axios.get<T>(url, { params })).data;
+      break;
     case RequestType.Post:
-      return (await axios.post(url, body, { params })).data;
+      response = (await axios.post<T>(url, body, { params })).data;
+      break;
     default:
       throw new Error(`Request type "${RequestType}" not supported.`);
   }
+
+  if (isObject(response) && response?.message) {
+    throw new Error(response.message);
+  }
+
+  return response;
 };
