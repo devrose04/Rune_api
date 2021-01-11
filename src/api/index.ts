@@ -5,3 +5,4 @@ process.on('unhandledRejection', (data) => {
 
 export * from './add';
 export * from './find';
+export * from './remove';

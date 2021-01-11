@@ -33,3 +33,10 @@ functions:
           path: /find
           method: GET
           cors: true
+  remove:
+    handler: src/handler.remove
+    events:
+      - http:
+          path: /remove
+          method: DELETE
+          cors: true

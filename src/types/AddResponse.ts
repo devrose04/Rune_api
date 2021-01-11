@@ -1,3 +1,3 @@
-export interface AddResponse {
-  id: string;
-}
+import { Rune } from '../db/entity/Rune';
+
+export type AddResponse = Rune;

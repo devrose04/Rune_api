@@ -2,7 +2,6 @@ import { Aett } from '../types/Aett';
 import { Order } from '../types/Order';
 
 export const FindSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {
     aett: {
