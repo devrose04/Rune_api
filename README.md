@@ -24,6 +24,10 @@ The complete list of endpoints is below:
 
 Find runes. Optionally filter by aett, by default this action return all runes.
 
+```http
+GET https://runesapi.com/find
+```
+
 #### Parameters
 
 - name - optional `[string]`
@@ -48,7 +52,11 @@ function will be as follows:
 
 ### Add
 
-Add a new rune to an aett.
+Add a new rune to an aett. The name must be unique.
+
+```http
+POST https://runesapi.com/add
+```
 
 #### Parameters
 
@@ -61,11 +69,19 @@ Add a new rune to an aett.
 
 Remove a rune by its name.
 
+```http
+DELETE https://runesapi.com/remove
+```
+
 - name - required `[string]`
 
 ### Update
 
 Update a rune by its name. You cannot use this endpoint to rename a rune.
+
+```http
+PUT https://runesapi.com/update
+```
 
 #### Parameters
 
