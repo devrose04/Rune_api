@@ -13,6 +13,9 @@ Documentation for all endpoints are below, but if you intend to simply use the
 public http site we offer you will be restricted to **read only** endpoints like
 `find`.
 
+It should be noted that the `GET` endpoints are expecting query parameters whereas
+the `POST`, `PUT` and `DELETE` endpoints are expecting a request body.
+
 The complete list of endpoints is below:
 
 - [find](#find)
@@ -28,7 +31,7 @@ Find runes. Optionally filter by aett, by default this action return all runes.
 GET https://runesapi.com/find
 ```
 
-#### Parameters
+#### Query Parameters
 
 - name - optional `[string]`
 - aett - optional `[string]`
@@ -58,7 +61,7 @@ Add a new rune to an aett. The name must be unique.
 POST https://runesapi.com/add
 ```
 
-#### Parameters
+#### Request Body
 
 - name - required `[string]`
 - aett - required `[string]`
@@ -73,6 +76,8 @@ Remove a rune by its name.
 DELETE https://runesapi.com/remove
 ```
 
+#### Request Body
+
 - name - required `[string]`
 
 ### Update
@@ -83,7 +88,7 @@ Update a rune by its name. You cannot use this endpoint to rename a rune.
 PUT https://runesapi.com/update
 ```
 
-#### Parameters
+#### Request Body
 
 - name - required `[string]`
 - aett - optional `[string]`
