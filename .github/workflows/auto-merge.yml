@@ -1,14 +1,19 @@
 name: auto-merge
 
 on:
-  pull_request:
+  pull_request_review:
+    types: [submitted]
+  pull_request_target:
+    types: [labeled]
 
 jobs:
-  auto-merge:
+  automerge:
+    if: github.event.review.state == 'approved' || !github.event.review
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+      - uses: reitermarkus/automerge@v1
         with:
-          target: minor
-          github-token: ${{ secrets.mytoken }}
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          merge-method: rebase
+          required-labels: automerge
+          pull-request: ${{ github.event.inputs.pull-request }}
