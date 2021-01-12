@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: reitermarkus/automerge@v1
         with:
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          token: ${{ secrets.ARBOR_AUTO_MERGE }}
           merge-method: rebase
           required-labels: automerge
           pull-request: ${{ github.event.inputs.pull-request }}
