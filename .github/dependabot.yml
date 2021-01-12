@@ -6,4 +6,3 @@ updates:
       prefix: 'chore: '
     schedule:
       interval: 'daily'
-    versioning-strategy: lockfile-only
