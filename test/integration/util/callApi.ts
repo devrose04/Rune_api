@@ -41,8 +41,14 @@ export const callApi = async <T extends IGenericObject>({
     case RequestType.Post:
       response = (await axios.post<T>(url, body, { params })).data;
       break;
+    case RequestType.Delete:
+      response = (await axios.delete<T>(url, { data: body })).data;
+      break;
+    case RequestType.Put:
+      response = (await axios.put<T>(url, body)).data;
+      break;
     default:
-      throw new Error(`Request type "${RequestType}" not supported.`);
+      throw new Error(`Request type "${type}" not supported.`);
   }
 
   if (isObject(response) && response?.message) {

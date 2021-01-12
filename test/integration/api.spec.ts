@@ -1,40 +1,66 @@
 import { callApi, RequestType } from './util/callApi';
 import { AddResponse } from '../../src/types/AddResponse';
 import { FindResponse } from '../../src/types/FindResponse';
+import { Rune } from '../../src/db/entity/Rune';
 
 describe('CRUD', () => {
+  let addedRunes: Rune[] = [];
+
+  afterEach(async () => {
+    await Promise.all(
+      addedRunes.map((r) =>
+        callApi({
+          endpoint: 'remove',
+          type: RequestType.Delete,
+          body: {
+            name: r.name,
+          },
+        })
+      )
+    );
+
+    addedRunes = [];
+  });
+
   describe('add', () => {
     it('should throw a validation error if an invalid name is provided', async () => {
-      // const { statusCode, errors } = await callApi<AddResponse>({
-      //   endpoint: 'add',
-      //   type: RequestType.Post,
-      //   body: {
-      //     name: 5,
-      //   },
-      // });
-      // expect(statusCode).toBe(422);
-      // expect(errors).toEqual([
-      //   {
-      //     keyword: 'type',
-      //     dataPath: '/name',
-      //     schemaPath: '#/properties/name/type',
-      //     params: {
-      //       type: 'string',
-      //     },
-      //     message: 'should be string',
-      //   },
-      // ]);
+      await expect(
+        callApi<AddResponse>({
+          endpoint: 'add',
+          type: RequestType.Post,
+          body: {
+            name: 5,
+          },
+        })
+      ).rejects.toEqual(
+        expect.objectContaining({
+          message: 'Input does not meet schema requirements.',
+        })
+      );
     });
 
     it('should add a rune', async () => {
-      // const resp = await callApi<AddResponse>({
-      //   endpoint: 'add',
-      //   type: RequestType.Post,
-      // });
+      const rune = await callApi<AddResponse>({
+        endpoint: 'add',
+        type: RequestType.Post,
+        body: {
+          name: 'foo2',
+          transliteration: '$',
+          aett: 'freya',
+        },
+      });
+
+      addedRunes.push(rune);
+
+      expect(rune).toEqual({
+        name: 'foo2',
+        transliteration: '$',
+        aett: 'freya',
+      });
     });
   });
 
-  describe.only('find', () => {
+  describe('find', () => {
     it('should throw a validation error if an aett is not supported', async () => {
       try {
         await callApi<FindResponse>({
@@ -107,6 +133,99 @@ describe('CRUD', () => {
           aett: 'tyr',
         }),
       ]);
+    });
+  });
+
+  /**
+   * Remove is sort of implicitly tested in the after each hook
+   * above but let's write a more explicit test here
+   */
+  describe('remove', () => {
+    it('should remove an added rune', async () => {
+      const rune = await callApi<AddResponse>({
+        endpoint: 'add',
+        type: RequestType.Post,
+        body: { name: 'foo3', aett: 'freya' },
+      });
+
+      await expect(
+        callApi({
+          endpoint: 'remove',
+          type: RequestType.Delete,
+          body: {
+            name: rune.name,
+          },
+        })
+      ).resolves.toEqual({
+        affected: 1,
+      });
+    });
+  });
+
+  describe('update', () => {
+    it('should update an added rune', async () => {
+      const rune = await callApi<AddResponse>({
+        endpoint: 'add',
+        type: RequestType.Post,
+        body: { name: 'foo4', aett: 'freya' },
+      });
+
+      addedRunes.push(rune);
+
+      await expect(
+        callApi({
+          endpoint: 'update',
+          type: RequestType.Put,
+          body: {
+            name: rune.name,
+            transliteration: 'zh',
+          },
+        })
+      ).resolves.toEqual({
+        aett: 'freya',
+        name: 'foo4',
+        transliteration: 'zh',
+      });
+    });
+
+    it('should not overwrite transliterations', async () => {
+      const rune = await callApi<AddResponse>({
+        endpoint: 'add',
+        type: RequestType.Post,
+        body: { name: 'foo5', aett: 'freya' },
+      });
+
+      addedRunes.push(rune);
+
+      await expect(
+        callApi({
+          endpoint: 'update',
+          type: RequestType.Put,
+          body: {
+            name: rune.name,
+            transliteration: 'zh',
+          },
+        })
+      ).resolves.toEqual({
+        aett: 'freya',
+        name: rune.name,
+        transliteration: 'zh',
+      });
+
+      await expect(
+        callApi({
+          endpoint: 'update',
+          type: RequestType.Put,
+          body: {
+            name: rune.name,
+            aett: 'heimdall',
+          },
+        })
+      ).resolves.toEqual({
+        aett: 'heimdall',
+        name: rune.name,
+        transliteration: 'zh',
+      });
     });
   });
 });

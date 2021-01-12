@@ -8,10 +8,12 @@ interface IRuneConstructor {
 
 @Entity()
 export class Rune {
-  constructor(r: IRuneConstructor) {
-    this.name = r.name;
-    this.transliteration = r.transliteration;
-    this.aett = r.aett;
+  constructor(r?: IRuneConstructor) {
+    if (r) {
+      this.name = r.name;
+      this.transliteration = r.transliteration;
+      this.aett = r.aett;
+    }
   }
 
   @PrimaryColumn()
