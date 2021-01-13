@@ -4,9 +4,6 @@ on:
   pull_request_review:
     types:
       - submitted
-  check_suite:
-    types:
-      - completed
 
 jobs:
   auto-merge:

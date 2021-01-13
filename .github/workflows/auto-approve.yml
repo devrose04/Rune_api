@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
-        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' && github.event.label.name == 'automerge'
         with:
           github-token: '${{ secrets.ARBOR_BOT_PAT }}'
