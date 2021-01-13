@@ -1,4 +1,4 @@
-name: auto-merge
+name: auto-approve-and-merge
 
 on:
   pull_request_review:
@@ -6,21 +6,30 @@ on:
 
 jobs:
   auto-approve:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
         # Yeah, lets not leave it this way
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-
-  automerge:
-    if: github.event.review.state == 'approved' || !github.event.review
-    runs-on: ubuntu-latest
+          github-token: '${{ secrets.ARBOR_BOT_PAT }}'
+  test:
+    runs-on: ubuntu-20.04
+    needs: auto-approve
+    steps:
+      - run: echo 'foo'
+      - run: echo '${{ github.event.review.state }}'
+      - run: echo '${{ github.event.review }}'
+      - run: echo '${{ github.actor }}'
+      - run: echo 'bar'
+  auto-merge:
+    runs-on: ubuntu-20.04
+    needs: test
     steps:
       - uses: reitermarkus/automerge@v1
+        if: github.event.review.state == 'approved' || !github.event.review
         with:
-          token: ${{ secrets.ARBOR_AUTO_MERGE }}
+          token: ${{ secrets.ARBOR_BOT_PAT }}
           merge-method: rebase
           required-labels: automerge
           pull-request: ${{ github.event.inputs.pull-request }}
