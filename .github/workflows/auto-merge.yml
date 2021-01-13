@@ -13,6 +13,10 @@ jobs:
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           github-token: '${{ secrets.ARBOR_BOT_PAT }}'
+  test:
+    runs-on: ubuntu-20.04
+    needs: auto-approve
+    steps:
       - run: echo 'foo'
       - run: echo '${{ github.event.review.state }}'
       - run: echo '${{ github.event.review }}'
@@ -20,7 +24,7 @@ jobs:
       - run: echo 'bar'
   auto-merge:
     runs-on: ubuntu-20.04
-    needs: auto-approve
+    needs: test
     steps:
       - uses: reitermarkus/automerge@v1
         if: github.event.review.state == 'approved' || !github.event.review
