@@ -36,7 +36,7 @@ GET https://runesapi.com/find
 - name - optional `[string]`
 - aett - optional `[string]`
   - Accepted Values - `freya` | `heimdall` | `tyr`
-  - This also can take a comma delimited string of aettir to return like `'freya,heimdall` to return a combination of runes
+  - This also can take a comma delimited string of aettir like `'freya,heimdall` to return a combination of runes
 
 #### Response
 
