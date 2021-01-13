@@ -2,15 +2,18 @@ name: auto-merge
 
 on:
   pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
 
 jobs:
   auto-merge:
     runs-on: ubuntu-20.04
     steps:
-      - uses: reitermarkus/automerge@v1
-        if: github.event.review.state == 'approved' || !github.event.review
-        with:
-          token: ${{ secrets.ARBOR_BOT_PAT }}
-          merge-method: rebase
-          required-labels: automerge
-          pull-request: ${{ github.event.inputs.pull-request }}
+      - name: automerge
+        if: github.event.review.state == 'approved'
+        uses: 'pascalgn/automerge-action@v0.13.0'
+        env:
+          GITHUB_TOKEN: '${{ secrets.ARBOR_BOT_PAT }}'
