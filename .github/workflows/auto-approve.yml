@@ -2,7 +2,13 @@ name: auto-approve
 
 on:
   pull_request_target:
-    types: ['labeled', 'opened', 'reopened', 'ready_for_review']
+    types:
+      - labeled
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
+      - edited
 
 jobs:
   auto-approve:
