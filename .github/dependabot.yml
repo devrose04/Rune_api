@@ -6,3 +6,7 @@ updates:
       prefix: 'chore: '
     schedule:
       interval: 'daily'
+    labels:
+      - 'dependencies'
+      - 'dependabot'
+      - 'automerge'
