@@ -1,0 +1,17 @@
+name: auto-approve
+
+on:
+  pull_request_target:
+    types: ['labeled', 'opened', 'reopened', 'ready_for_review']
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo '${{ github.actor }}'
+      - run: echo '${{ github.actor == 'dependabot[bot]' }}'
+      - uses: hmarr/auto-approve-action@v2.0.0
+        # Yeah, lets not leave it this way
+        # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        with:
+          github-token: '${{ secrets.ARBOR_BOT_PAT }}'
