@@ -26,7 +26,7 @@
     "ajv": "^7.0.3",
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
-    "typeorm": "^0.2.29"
+    "typeorm": "^0.2.30"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.66",
