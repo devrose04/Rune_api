@@ -9,6 +9,9 @@ jobs:
   auto-merge:
     runs-on: ubuntu-20.04
     steps:
+      - run: \
+          echo '${{ github_event_path }}'
+          echo 'cat ${{ github_event_path }}'
       - name: automerge
         if: github.event.review.state == 'approved'
         uses: 'pascalgn/automerge-action@v0.13.0'

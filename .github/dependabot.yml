@@ -8,5 +8,4 @@ updates:
       interval: 'daily'
     labels:
       - 'dependencies'
-      - 'dependabot'
       - 'automerge'
