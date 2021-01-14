@@ -3,6 +3,19 @@
 RunesAPI is a simple open source API for interacting with various
 runic systems.
 
+## How do I use it?
+
+RunesAPI can be used fully locally with a docker image as depicted below
+with `docker-compose`:
+
+```yaml
+# TODO
+```
+
+or you can simply call the public API. The public API will have more restrictions
+in place than the local copy but if you only want to read data the base url can
+be accessed at [https://runesapi.com](https://runesapi.com)
+
 ## API Endpoints
 
 If you are running this locally within docker you'll have access to the full
