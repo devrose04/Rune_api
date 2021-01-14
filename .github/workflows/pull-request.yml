@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-20.04
     name: Setup
     steps:
-      - run: \
-          echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
+      - name: Event path test
+        run: |
           echo '$github_event_path'
           echo 'cat github_event_path'
-          echo "${{ env.IS_PR }}"
+          echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
 
   pr-labeler:
     runs-on: ubuntu-20.04
