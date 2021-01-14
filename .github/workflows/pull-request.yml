@@ -39,7 +39,7 @@ jobs:
 
   auto-approve:
     runs-on: ubuntu-20.04
-    # if: ${{ github.event.action == 'review_requested' }}
+    if: ${{ github.event.action == 'review_requested' }}
     name: Trigger Bot Approval
     needs: setup
     steps:
