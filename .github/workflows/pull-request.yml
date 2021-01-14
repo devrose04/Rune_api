@@ -13,8 +13,8 @@ jobs:
     steps:
       - run: \
           echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
-          echo '${{ github_event_path }}'
-          echo 'cat ${{ github_event_path }}'
+          echo '$github_event_path'
+          echo 'cat github_event_path'
           echo "${{ env.IS_PR }}"
 
   pr-labeler:
@@ -45,9 +45,6 @@ jobs:
     # if: github.event.label.name == 'automerge'
     name: Trigger Magic Approvals
     steps:
-      - run: \
-          echo '${{ github_event_path }}'
-          echo 'cat ${{ github_event_path }}'
       - uses: hmarr/auto-approve-action@v2.0.0
         if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
