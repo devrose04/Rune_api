@@ -34,12 +34,12 @@ jobs:
         if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         uses: kunihiko-t/review-request-action@v0.1.3
         with:
-          repo-token: ${{ secrets.TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           reviewers: arbor-ci
 
   auto-approve:
     runs-on: ubuntu-20.04
-    if: ${{ github.event.action == 'review_requested' }}
+    # if: ${{ github.event.action == 'review_requested' }}
     name: Trigger Bot Approval
     needs: setup
     steps:
