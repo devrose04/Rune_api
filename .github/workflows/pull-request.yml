@@ -28,9 +28,8 @@ jobs:
 
   auto-approve:
     runs-on: ubuntu-20.04
-    if: ${{ github.event.action == 'review_requested' }}
     name: Trigger Bot Approval
-    needs: request-review
+    needs: pr-labeler
     steps:
       - uses: hmarr/auto-approve-action@v2.0.0
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
