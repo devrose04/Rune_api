@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Event path test
         run: |
-          echo '$github_event_path'
-          echo 'cat github_event_path'
+          echo $github_event_path
+          cat $github_event_path
           echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
 
   pr-labeler:
