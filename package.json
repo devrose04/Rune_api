@@ -11,7 +11,7 @@
     "start": "npm run up && docker-compose up -d runesapi",
     "down": "docker-compose down",
     "build": "rm -rf .dist && tsc --outDir .build",
-    "test": "jest --selectProjects unit",
+    "test": "jest --selectProjects unit --passWithNoTests",
     "pretest:integration": "./scripts/up.sh && docker-compose up -d runesapi && wait-on tcp:3002 && wait-on tcp:3000",
     "test:integration": "jest --selectProjects integration --detectOpenHandles",
     "posttest:integration": "npm run down",
