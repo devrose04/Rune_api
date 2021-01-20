@@ -43,7 +43,7 @@ jobs:
           fi
 
       - name: Docker login
-        run: docker login --username $DH_USER --password $DH_PASS
+        run: docker login --username $DOCKER_USER --password $DOCKER_PASSWORD
         env:
           DOCKER_USER: ${{ secrets.DH_USER }}
           DOCKER_PASSWORD: ${{ secrets.DH_PASS }}
