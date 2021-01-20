@@ -17,6 +17,7 @@ module.exports = {
       ...sharedProjectProperties,
       displayName: 'integration',
       testMatch: ['**/test/integration/**/*.spec.ts'],
+      setupFilesAfterEnv: ['<rootDir>/test/integration/waitForEnv.ts'],
     },
   ],
 };

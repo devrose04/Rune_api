@@ -1,0 +1,71 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with: { node-version: '12.19' }
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          path: ~/.npm
+          restore-keys: ${{ runner.os }}-npm-
+
+      - name: Setup variables
+        id: get_vars
+        run: |
+          export V=$(jq -r .version package.json)
+          export V_MAJOR=$(jq -r '.version | split(".")[0]' package.json)
+          export V_MINOR=$(jq -r '.version | split(".")[1]' package.json)
+          export BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "V=$V" >> $GITHUB_ENV
+          echo "V_MAJOR=$V_MAJOR" >> $GITHUB_ENV
+          echo "V_MAJOR_MINOR=$V_MAJOR.$V_MINOR" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          if [ $BRANCH_NAME = "main" ]; then
+            echo "::set-output name=tags::$V, $V_MAJOR, $V_MAJOR_MINOR, latest"
+          fi
+
+      - name: Docker login
+        run: docker login --username $DH_USER --password $DH_PASS
+        env:
+          DOCKER_USER: ${{ secrets.DH_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DH_PASS }}
+
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Quality checks
+        run: npm run check
+      - name: Unit tests
+        run: npm test
+
+      - name: Docker build
+        if: github.event_name == 'push' && env.BRANCH_NAME == 'main'
+        uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
+          BUILDKIT_PROGRESS: plain
+        with:
+          repository: ${{ github.event.repository.name }}
+          username: ${{ secrets.DH_USER }}
+          password: ${{ secrets.DH_PASS }}
+          tags: ${{ steps.get_vars.outputs.tags }}
+          build_args: BUILDKIT_INLINE_CACHE=1
+          add_git_labels: true
+          push: true
