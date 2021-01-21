@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  runesapi:
+    build: { context: . }
+    depends_on: ['runesapi-db-init']
+    environment:
+      TYPEORM_URL: postgres://runesapi:runesapi@postgres/runes
+    ports: ['3000:3000', '3002:3002']
+
+  runesapi-db-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.init
+    depends_on: ['postgres']
+    environment:
+      TYPEORM_URL: postgres://runesapi:runesapi@postgres/runes
+
   postgres:
     image: postgres:12
     environment:

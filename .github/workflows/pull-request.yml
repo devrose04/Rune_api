@@ -1,0 +1,37 @@
+name: Pull Request
+on:
+  pull_request:
+    types: ['review_requested', 'opened', 'synchronize', 'reopened']
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  setup:
+    runs-on: ubuntu-20.04
+    name: Setup
+    steps:
+      - name: Event path test
+        run: |
+          echo "IS_PR=${{ github.event_name == 'pull_request' }}" >> $GITHUB_ENV
+
+  pr-labeler:
+    runs-on: ubuntu-20.04
+    needs: setup
+    name: Label Pull Request
+    if: ${{ github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened' }}
+    steps:
+      - uses: TimonVS/pr-labeler-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-approve:
+    runs-on: ubuntu-20.04
+    name: Trigger Bot Approval
+    needs: pr-labeler
+    steps:
+      - uses: hmarr/auto-approve-action@v2.0.0
+        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        with:
+          github-token: '${{ secrets.ARBOR_BOT_PAT }}'

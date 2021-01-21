@@ -1,27 +1,109 @@
-# Runes API
+# RunesAPI
 
-A RESTful API for Runes - [runesapi.co](http://runesapi.co/)
+RunesAPI is a simple open source API for interacting with various
+runic systems.
 
-The RunesAPI will have its API requests versioned
-to promote backwards compatibility.
+## How do I use it?
 
-## Endpoints
+RunesAPI can be used fully locally with a docker image as depicted below
+with `docker-compose`:
 
-### `find`
+```yaml
+# TODO
+```
 
-Find runes. Optionally filter by aett or name, by
-default this action return all runes.
+or you can simply call the public API. The public API will have more restrictions
+in place than the local copy but if you only want to read data the base url can
+be accessed at [https://runesapi.com](https://runesapi.com)
 
-#### Parameters
+## API Endpoints
 
-- `aett` - optional
-  - _Accepted Values_ - `freya` | `heimdall` | `tyr`
-  - This also can take an array of aetts to return like
-    `['freya', 'heimdall']` to return a combination of runes
+If you are running this locally within docker you'll have access to the full
+suite of functions available such as adding your own runes, or changing rune
+names to match what you may be more familiar with.
 
-## Local development
+Documentation for all endpoints are below, but if you intend to simply use the
+public http site we offer you will be restricted to **read only** endpoints like
+`find`.
 
-While you can always interact with our stable API at
-[runesapi.co](http://runesapi.co/), we also provide a
-public docker container for consuming our API during local
-development for reliable API response times while testing.
+It should be noted that the `GET` endpoints are expecting query parameters whereas
+the `POST`, `PUT` and `DELETE` endpoints are expecting a request body.
+
+The complete list of endpoints is below:
+
+- [find](#find)
+- [add](#add)
+- [remove](#remove)
+- [update](#update)
+
+### Find
+
+Find runes. Optionally filter by aett, by default this action return all runes.
+
+```http
+GET https://runesapi.com/find
+```
+
+#### Query Parameters
+
+- name - optional `[string]`
+- aett - optional `[string]`
+  - Accepted Values - `freya` | `heimdall` | `tyr`
+  - This also can take a comma delimited string of aettir like `'freya,heimdall` to return a combination of runes
+
+#### Response
+
+Provided there are no schema errors with your input the output of this
+function will be as follows:
+
+```ts
+{
+  "count": number,
+  "runes": [
+    { "name": string, "transliteration": string, "aett": string }
+    { "name": string, "transliteration": string, "aett": string }
+  ]
+}
+```
+
+### Add
+
+Add a new rune to an aett. The name must be unique.
+
+```http
+POST https://runesapi.com/add
+```
+
+#### Request Body
+
+- name - required `[string]`
+- aett - required `[string]`
+  - Accepted Values - `freya` | `heimdall` | `tyr`
+- transliteration - optional `[string]`
+
+### Remove
+
+Remove a rune by its name.
+
+```http
+DELETE https://runesapi.com/remove
+```
+
+#### Request Body
+
+- name - required `[string]`
+
+### Update
+
+Update a rune by its name. You cannot use this endpoint to rename a rune.
+
+```http
+PUT https://runesapi.com/update
+```
+
+#### Request Body
+
+- name - required `[string]`
+- aett - optional `[string]`
+  - Accepted Values - `freya` | `heimdall` | `tyr`
+- transliteration - optional `[string]`

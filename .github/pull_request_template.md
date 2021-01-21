@@ -4,5 +4,4 @@
 
 ## Checklist
 
-- [ ] PR Title matches guidelines (fix:, feat:, chore: prefix
-      with "!" before the ":" if the change is breaking)
+- [ ] PR Title matches guidelines (`fix:`, `feat:`, `chore:` prefix with `!` before the `:` if the change is breaking)

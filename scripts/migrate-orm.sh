@@ -1,7 +1,7 @@
 #!/bin/sh
 
 main() {
-  usage() { echo "Usage: $0 [-d <string*>] [-t <string*>] [-u <string*>] [-p <string*>] [-h <string>] [-m <number>]" 1>&2; exit 1; }
+  usage() { echo "Usage: $0 [-d <string*>] [-t <string*>] [-u <string*>] [-p <string*>] [-m <number>] [-h <string>]" 1>&2; exit 1; }
 
   while getopts ":h:d:t:u:p:m:" o; do
       case "${o}" in
@@ -49,24 +49,9 @@ main() {
     h="localhost"
   fi
 
-  if [ -z "${m}" ]; then
-    m="30"
-  fi
-
-  counter=0;
-  export PGPASSWORD=$p
-  until psql -q -h $h -U $d -d $t -c '\l'; do
-    echo >&2 "$(date +%I:%M:%S%p) Postgres is unavailable."
-    counter=$(( counter + 1 ))
-
-    if [ $counter -ge $m ]; then
-      echo "Max tries of $m has been surpassed with no successful connection. Exiting."
-      exit 1
-    else
-      sleep 1
-    fi
-  done
-  echo >&2 "$(date +%I:%M:%S%p) Postgres is now available."
+  sh ./scripts/wait-for-postgres.sh -d $d -t $t -u $u -p $p -h $h -m $m
+  export TYPEORM_URL="postgres://${u}:${p}@${h}/${t}"
+  npm run db:run:migration
 }
 
 main "$@"

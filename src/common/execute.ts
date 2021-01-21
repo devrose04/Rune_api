@@ -1,6 +1,6 @@
 import Ajv, { Schema } from 'ajv';
 import { Context } from 'aws-lambda';
-import isError from 'lodash.iserror';
+import { isError } from 'lodash';
 import { IApiContract } from '../types/IApiContract';
 import { JsonSchema, JsonSchemaToType } from '../types/JsonSchema';
 import { formatErrResponse } from './formatErrorResponse';
@@ -31,7 +31,13 @@ export async function execute<R, T extends JsonSchema>(
   } catch (e: unknown) {
     if (isError(e)) {
       return formatResponse(
-        formatErrResponse({ ...e, requestId: ctx.awsRequestId })
+        formatErrResponse({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          code: (e as any).code ?? 500,
+          message: e.message,
+          name: e.name,
+          requestId: ctx.awsRequestId,
+        })
       );
     }
 

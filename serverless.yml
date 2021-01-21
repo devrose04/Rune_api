@@ -33,3 +33,17 @@ functions:
           path: /find
           method: GET
           cors: true
+  update:
+    handler: src/handler.update
+    events:
+      - http:
+          path: /update
+          method: PUT
+          cors: true
+  remove:
+    handler: src/handler.remove
+    events:
+      - http:
+          path: /remove
+          method: DELETE
+          cors: true
