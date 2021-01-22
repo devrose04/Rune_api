@@ -10,6 +10,8 @@ defaults:
     shell: bash
 
 env:
+  INIT_IMAGE: runesapi/runesapi-init
+  API_IMAGE: runesapi/runesapi
   REPO_NAME: ${{ github.event.repository.name }}
 
 jobs:
@@ -58,5 +60,9 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: .
-          tags: runesapi:latest runesapi:${{ env.V }} runesapi:${{ env.V_MAJOR }} runesapi:${{ env.V_MAJOR_MINOR }}
+          tags: |
+            ${{ env.API_IMAGE }}:latest
+            ${{ env.API_IMAGE }}:${{ env.V }}
+            ${{ env.API_IMAGE }}:${{ env.V_MAJOR }}
+            ${{env.API_IMAGE}}:${{env.V_MAJOR_MINOR}}
           push: true
