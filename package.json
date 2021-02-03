@@ -42,7 +42,7 @@
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "sequelize-cli": "^6.2.0",
-    "serverless": "^2.21.1",
+    "serverless": "^2.22.0",
     "serverless-offline": "^6.8.0",
     "serverless-plugin-typescript": "^1.1.9",
     "ts-jest": "^26.5.0",
