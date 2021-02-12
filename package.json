@@ -31,7 +31,7 @@
     "typeorm": "^0.2.31"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.71",
+    "@types/aws-lambda": "^8.10.72",
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
