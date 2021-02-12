@@ -25,7 +25,7 @@
     "fix:prettier": "npm run check:prettier -- --write"
   },
   "dependencies": {
-    "ajv": "^7.0.4",
+    "ajv": "^7.1.0",
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
     "typeorm": "^0.2.31"
